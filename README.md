@@ -4,14 +4,17 @@
 Built using ArcGIS Server API with JavaScript, map shows counties color-coded according to population, ethnicity, and gender.
 
 ### To Run:
-```git clone```
+```git clone https://github.com/RillistikPete/CO-Population-Density.git  YourFolderName```
+And navigate to directory
+## OR
+Download project and navigate to directory
 
 ### Windows:
-start filename
+start ColoradoPopDensity.html
 
 ### Mac:
-open filename
+open ColoradoPopDensity.html
 
 ### Linux/Unix:
-xdg-open filename
+xdg-open ColoradoPopDensity.html
 
