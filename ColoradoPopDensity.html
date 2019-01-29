@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+    <title>Simple Map</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/3.27/esri/css/esri.css">
+    <style>
+      html, body, #map {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script src="https://js.arcgis.com/3.27/"></script>
+    <script>
+      var map, defPopSymbol, onePopSymbol, twoPopSymbol, threePopSymbol, fourPopSymbol, fivePopSymbol;
+
+      require([
+        "esri/map",
+        "esri/tasks/query",
+        "esri/tasks/QueryTask",
+        "esri/symbols/SimpleFillSymbol",
+        "esri/InfoTemplate",
+        "dojo/_base/Color",
+        "dojo/domReady!"], function(Map, Query, QueryTask, SimpleFillSymbol, InfoTemplate, Color) {
+        map = new Map("map", {
+          basemap: "topo",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
+          center: [-105.498, 38.981], // longitude, latitude
+          zoom: 7,
+        });
+        
+        //defPopSymbol = new SimpleFillSymbol().setColor(new Color([255,255,255,0]));
+        
+        onePopSymbol = new SimpleFillSymbol().setColor(new Color([255,255,128,.45])); //yellow
+        twoPopSymbol = new SimpleFillSymbol().setColor(new Color([250,209,85,.45]));
+        threePopSymbol = new SimpleFillSymbol().setColor(new Color([242,167,46,.45])); //orange
+        fourPopSymbol = new SimpleFillSymbol().setColor(new Color([173,83,19,.45]));
+        fivePopSymbol = new SimpleFillSymbol().setColor(new Color([107,0,0,.45])); //dark maroon
+        
+        
+        var queryTask = new QueryTask("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer/2");
+        var query = new Query();
+        query.where = "STATE_NAME = 'Colorado'";
+        query.returnGeometry = true;
+        query.outFields = ["POP90_SQMI"];
+        queryTask.execute(query, addPolysToMap);
+        
+        function addPolysToMap(featureSet) {
+          var features =featureSet.features;
+          var feature;
+          for (var i=0, il=features.length; i<il; i++){
+            feature = features[i];
+            //map.graphics.add(features[i].setSymbol(defPopSymbol));
+            attributes = feature.attributes;
+            pop = attributes.POP90_SQMI;
+            
+            if (pop < 10)
+            {
+              map.graphics.add(features[i].setSymbol(onePopSymbol));
+            }
+            else if (pop >= 10 && pop < 95)
+            {
+              map.graphics.add(features[i].setSymbol(twoPopSymbol));
+            }
+            else if (pop >= 95 && pop < 365)
+            {
+              map.graphics.add(features[i].setSymbol(threePopSymbol));
+            }
+            else if (pop >=365 && pop < 1100)
+            {
+              map.graphics.add(features[i].setSymbol(fourPopSymbol));
+            }
+            else
+            {
+              map.graphics.add(features[i].setSymbol(fivePopSymbol));
+            }
+            
+            
+          }
+        }
+        
+        
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="map"></div>
+  </body>
+</html>
