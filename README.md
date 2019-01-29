@@ -5,16 +5,18 @@ Built using ArcGIS Server API with JavaScript, map shows counties color-coded ac
 
 ### To Run:
 ```git clone https://github.com/RillistikPete/CO-Population-Density.git  YourFolderName```
+
 And navigate to directory
-## OR
+### OR
 Download project and navigate to directory
 
-### Windows:
+
+## Windows:
 start ColoradoPopDensity.html
 
-### Mac:
+## Mac:
 open ColoradoPopDensity.html
 
-### Linux/Unix:
+## Linux/Unix:
 xdg-open ColoradoPopDensity.html
 
