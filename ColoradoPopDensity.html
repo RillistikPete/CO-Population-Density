@@ -43,8 +43,10 @@
         var query = new Query();
         query.where = "STATE_NAME = 'Colorado'";
         query.returnGeometry = true;
-        query.outFields = ["POP90_SQMI"];
+        query.outFields = ["NAME", "POP90_SQMI", "HOUSEHOLDS", "MALES", "FEMALES", "WHITE", "BLACK", "HISPANIC"];
         queryTask.execute(query, addPolysToMap);
+
+        resultTemplate = InfoTemplate("County Attributes", "${*}");
         
         function addPolysToMap(featureSet) {
           var features =featureSet.features;
@@ -57,23 +59,23 @@
             
             if (pop < 10)
             {
-              map.graphics.add(features[i].setSymbol(onePopSymbol));
+              map.graphics.add(features[i].setSymbol(onePopSymbol).setInfoTemplate(resultTemplate));
             }
             else if (pop >= 10 && pop < 95)
             {
-              map.graphics.add(features[i].setSymbol(twoPopSymbol));
+              map.graphics.add(features[i].setSymbol(twoPopSymbol).setInfoTemplate(resultTemplate));
             }
             else if (pop >= 95 && pop < 365)
             {
-              map.graphics.add(features[i].setSymbol(threePopSymbol));
+              map.graphics.add(features[i].setSymbol(threePopSymbol).setInfoTemplate(resultTemplate));
             }
             else if (pop >=365 && pop < 1100)
             {
-              map.graphics.add(features[i].setSymbol(fourPopSymbol));
+              map.graphics.add(features[i].setSymbol(fourPopSymbol).setInfoTemplate(resultTemplate));
             }
             else
             {
-              map.graphics.add(features[i].setSymbol(fivePopSymbol));
+              map.graphics.add(features[i].setSymbol(fivePopSymbol).setInfoTemplate(resultTemplate));
             }
             
             
